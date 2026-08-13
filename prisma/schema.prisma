@@ -1,0 +1,151 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User{
+  id String @id @default(cuid())
+  clerkId String @unique
+  username String @unique
+  email String @unique
+  playlists Playlist[]
+  queue Queue?
+  image String
+  createdAt DateTime @default(now())
+  sentRequests     Friendship[] @relation("requester")
+  receivedRequests Friendship[] @relation("receiver")
+}
+
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+  BLOCKED
+}
+
+model Friendship {
+  id          String           @id @default(cuid())
+  requesterId String
+  receiverId  String
+  status      FriendshipStatus @default(PENDING)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  requester User @relation("requester", fields: [requesterId], references: [id], onDelete: Cascade)
+  receiver  User @relation("receiver",  fields: [receiverId],  references: [id], onDelete: Cascade)
+
+  @@unique([requesterId, receiverId])
+}
+model SongArtist{
+  songId String
+  artistId String
+
+  song Song @relation(fields: [songId],references: [id],onDelete: Cascade)
+  artist Artist @relation(fields: [artistId],references: [id],onDelete: Cascade)
+  @@id([songId,artistId])
+}
+model Playlist{
+  id String @id @default(cuid())
+  userId String
+  name String
+  user User @relation(fields: [userId],references: [id])
+  songs PlaylistSong[]
+  isPublic Boolean @default(false)
+}
+model PlaylistSong{
+  id String @id @default(cuid())
+
+  playlistId String
+  name String
+  songId String
+
+  position Int
+
+  playlist Playlist @relation(fields: [playlistId],references: [id])
+  song Song @relation(fields: [songId],references: [id])
+}
+
+model Queue{
+  id String @id @default(cuid())
+  userId String @unique
+  user User @relation(fields: [userId],references: [id])
+  //songs
+  songs QueueSong[]
+}
+model QueueSong{
+  id String @id @default(cuid())
+  
+  queueId String
+  songId String
+
+  position Int
+
+  queue Queue @relation(fields: [queueId],references: [id])
+  song Song @relation(fields: [songId],references: [id])
+}
+
+model Song{
+  id  String @id @default(cuid())
+  title String 
+  fileName String
+  duration Int
+  // createdAt DateTime @default(now())
+  artists SongArtist[]
+  playlistSongs PlaylistSong[]
+  albumId String?
+  album Album? @relation(fields: [albumId],references: [id],onDelete: Cascade)
+  queueSongs QueueSong[]
+  image String
+  plainLyrics String
+  syncedLyrics String
+  explanation String?
+}
+
+model Room{
+  id String @id @default(cuid())
+  name String
+  hostId String
+  visibility String @default("public") // public | friends | invite
+  isActive Boolean @default(true)
+  createdAt DateTime @default(now())
+  invitations RoomInvitation[]
+}
+
+model RoomInvitation {
+  id         String   @id @default(cuid())
+  roomId     String
+  invitedId  String
+  hostId     String
+  status     String   @default("pending") // pending | accepted | rejected
+  createdAt  DateTime @default(now())
+
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+}
+
+model Artist{
+  id String @id @default(cuid())
+  name String @unique
+  bio String
+  image String
+  hasRealImage Boolean 
+  songs SongArtist[]
+  albums Album[]
+}
+
+model Album{
+  id String @id @default(cuid())
+  name String
+  artistId String 
+  artist Artist @relation(fields: [artistId],references: [id], onDelete: Cascade)
+  image String
+  songs Song[] 
+  @@unique([name,artistId])
+}
