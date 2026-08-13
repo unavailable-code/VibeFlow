@@ -189,23 +189,23 @@ export default function FriendsClient({ currentUser }: FriendsClientProps) {
     return (
         <div className="max-w-4xl mx-auto">
             {/* Header Tabs */}
-            <div className="flex gap-3 border-b border-white/[0.04] pb-4 mb-8">
+            <div className="flex gap-3 border-b border-border pb-4 mb-8">
                 <button
                     onClick={() => setActiveTab("friends")}
-                    className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-200 ${
+                    className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer border-none ${
                         activeTab === "friends"
-                            ? "bg-purple-600 text-white shadow-[0_4px_16px_rgba(168,85,247,0.3)]"
-                            : "text-white/50 hover:text-white hover:bg-white/5"
+                            ? "bg-primary text-white shadow-md shadow-primary/10"
+                            : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                     }`}
                 >
                     Friends ({friends.length})
                 </button>
                 <button
                     onClick={() => setActiveTab("pending")}
-                    className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-200 relative ${
+                    className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-200 relative cursor-pointer border-none ${
                         activeTab === "pending"
-                            ? "bg-purple-600 text-white shadow-[0_4px_16px_rgba(168,85,247,0.3)]"
-                            : "text-white/50 hover:text-white hover:bg-white/5"
+                            ? "bg-primary text-white shadow-md shadow-primary/10"
+                            : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                     }`}
                 >
                     Pending ({pending.length})
@@ -217,10 +217,10 @@ export default function FriendsClient({ currentUser }: FriendsClientProps) {
                 </button>
                 <button
                     onClick={() => setActiveTab("search")}
-                    className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-200 ${
+                    className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer border-none ${
                         activeTab === "search"
-                            ? "bg-purple-600 text-white shadow-[0_4px_16px_rgba(168,85,247,0.3)]"
-                            : "text-white/50 hover:text-white hover:bg-white/5"
+                            ? "bg-primary text-white shadow-md shadow-primary/10"
+                            : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                     }`}
                 >
                     Add Friend
@@ -231,10 +231,10 @@ export default function FriendsClient({ currentUser }: FriendsClientProps) {
             {activeTab === "friends" && (
                 <div className="space-y-4">
                     {friends.length === 0 ? (
-                        <div className="text-center py-20 bg-white/[0.01] border border-white/[0.04] rounded-2xl p-6">
-                            <Users className="w-12 h-12 text-white/20 mx-auto mb-4" />
-                            <p className="text-white/50 text-base font-semibold">No friends added yet</p>
-                            <p className="text-white/30 text-xs mt-1 font-medium">Search for users and add them to build your network.</p>
+                        <div className="text-center py-20 bg-card border border-border rounded-2xl p-6 shadow-sm">
+                            <Users className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
+                            <p className="text-foreground text-base font-bold">No friends added yet</p>
+                            <p className="text-muted-foreground text-xs mt-1 font-medium">Search for users and add them to build your network.</p>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -243,24 +243,24 @@ export default function FriendsClient({ currentUser }: FriendsClientProps) {
                                 return (
                                     <div
                                         key={friend.id}
-                                        className="bg-white/[0.02] border border-white/[0.04] p-4.5 rounded-2xl flex items-center justify-between hover:bg-white/[0.03] transition-all duration-200 group"
+                                        className="bg-card border border-border p-4.5 rounded-2xl flex items-center justify-between hover:bg-secondary/40 transition-all duration-200 group"
                                     >
                                         <div className="flex items-center gap-3.5 min-w-0">
                                             <div className="relative shrink-0">
                                                 <img
                                                     src={friend.image || "/default-avatar.png"}
                                                     alt={friend.username}
-                                                    className="w-12 h-12 rounded-full object-cover border border-white/10"
+                                                    className="w-12 h-12 rounded-full object-cover border border-border"
                                                 />
                                                 {/* Real-time Status Indicator Dot */}
-                                                <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-[#06060c] ${
-                                                    isOnline ? "bg-emerald-500 animate-pulse" : "bg-zinc-500"
+                                                <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-card ${
+                                                    isOnline ? "bg-emerald-500 animate-pulse" : "bg-zinc-400"
                                                 }`} />
                                             </div>
                                             <div className="min-w-0">
-                                                <p className="font-bold text-white text-sm md:text-base truncate tracking-tight">{friend.username}</p>
+                                                <p className="font-bold text-foreground text-sm md:text-base truncate tracking-tight">{friend.username}</p>
                                                 <p className={`text-[10px] md:text-xs font-semibold mt-0.5 uppercase tracking-wider ${
-                                                    isOnline ? "text-emerald-400" : "text-white/30"
+                                                    isOnline ? "text-emerald-500" : "text-muted-foreground/50"
                                                 }`}>
                                                     {isOnline ? "Active Now" : "Offline"}
                                                 </p>
@@ -269,7 +269,7 @@ export default function FriendsClient({ currentUser }: FriendsClientProps) {
                                         <button
                                             onClick={() => handleRemoveFriend(friend.friendshipId)}
                                             disabled={actionId === friend.friendshipId}
-                                            className="text-white/30 hover:text-red-400 p-2 rounded-full hover:bg-red-500/10 transition-colors disabled:opacity-50 shrink-0"
+                                            className="text-muted-foreground/45 hover:text-red-500 p-2 rounded-full hover:bg-red-500/10 transition-colors disabled:opacity-50 shrink-0 cursor-pointer border-none bg-transparent"
                                             title="Remove Friend"
                                         >
                                             <UserMinus size={18} />
@@ -287,29 +287,29 @@ export default function FriendsClient({ currentUser }: FriendsClientProps) {
                 <div className="space-y-6">
                     {/* Received Requests */}
                     <div>
-                        <h3 className="text-white/50 text-[10px] font-bold uppercase tracking-wider mb-3">Received Requests</h3>
+                        <h3 className="text-muted-foreground text-[10px] font-bold uppercase tracking-wider mb-3">Received Requests</h3>
                         {pending.length === 0 ? (
-                            <p className="text-white/30 text-xs font-medium py-2">No pending incoming requests.</p>
+                            <p className="text-muted-foreground/60 text-xs font-medium py-2">No pending incoming requests.</p>
                         ) : (
                             <div className="space-y-2">
                                 {pending.map((req) => (
                                     <div
                                         key={req.id}
-                                        className="bg-white/[0.02] border border-white/[0.04] p-4 rounded-xl flex items-center justify-between"
+                                        className="bg-card border border-border p-4 rounded-xl flex items-center justify-between"
                                     >
                                         <div className="flex items-center gap-3">
                                             <img
                                                 src={req.requester.image || "/default-avatar.png"}
                                                 alt={req.requester.username}
-                                                className="w-10 h-10 rounded-full object-cover border border-white/10"
+                                                className="w-10 h-10 rounded-full object-cover border border-border"
                                             />
-                                            <p className="font-bold text-sm text-white">{req.requester.username}</p>
+                                            <p className="font-bold text-sm text-foreground">{req.requester.username}</p>
                                         </div>
                                         <div className="flex gap-1.5">
                                             <button
                                                 onClick={() => handleRespond(req.id, "accept", req.requester.id)}
                                                 disabled={actionId === req.id}
-                                                className="bg-purple-600 hover:bg-purple-500 text-white p-2 rounded-xl flex items-center justify-center transition shadow-sm"
+                                                className="bg-primary hover:bg-primary-hover text-white p-2 rounded-xl flex items-center justify-center transition shadow-sm border-none cursor-pointer"
                                                 title="Accept"
                                             >
                                                 <Check size={16} strokeWidth={2.5} />
@@ -317,7 +317,7 @@ export default function FriendsClient({ currentUser }: FriendsClientProps) {
                                             <button
                                                 onClick={() => handleRespond(req.id, "reject", req.requester.id)}
                                                 disabled={actionId === req.id}
-                                                className="bg-white/5 hover:bg-white/10 text-white/70 hover:text-white p-2 rounded-xl flex items-center justify-center transition"
+                                                className="bg-secondary hover:bg-secondary/80 text-muted-foreground p-2 rounded-xl flex items-center justify-center transition border-none cursor-pointer"
                                                 title="Decline"
                                             >
                                                 <X size={16} />
@@ -331,25 +331,25 @@ export default function FriendsClient({ currentUser }: FriendsClientProps) {
 
                     {/* Sent Requests */}
                     <div>
-                        <h3 className="text-white/50 text-[10px] font-bold uppercase tracking-wider mb-3">Sent Requests</h3>
+                        <h3 className="text-muted-foreground text-[10px] font-bold uppercase tracking-wider mb-3">Sent Requests</h3>
                         {sent.length === 0 ? (
-                            <p className="text-white/30 text-xs font-medium py-2">No pending sent requests.</p>
+                            <p className="text-muted-foreground/60 text-xs font-medium py-2">No pending sent requests.</p>
                         ) : (
                             <div className="space-y-2">
                                 {sent.map((req) => (
                                     <div
                                         key={req.id}
-                                        className="bg-white/[0.02] border border-white/[0.04] p-4 rounded-xl flex items-center justify-between"
+                                        className="bg-card border border-border p-4 rounded-xl flex items-center justify-between"
                                     >
                                         <div className="flex items-center gap-3">
                                             <img
                                                 src={req.receiver.image || "/default-avatar.png"}
                                                 alt={req.receiver.username}
-                                                className="w-10 h-10 rounded-full object-cover border border-white/10"
+                                                className="w-10 h-10 rounded-full object-cover border border-border"
                                             />
-                                            <p className="font-bold text-sm text-white">{req.receiver.username}</p>
+                                            <p className="font-bold text-sm text-foreground">{req.receiver.username}</p>
                                         </div>
-                                        <span className="text-[10px] text-white/40 font-bold flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5">
+                                        <span className="text-[10px] text-muted-foreground font-bold flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary">
                                             <Clock size={12} /> PENDING
                                         </span>
                                     </div>
@@ -365,22 +365,22 @@ export default function FriendsClient({ currentUser }: FriendsClientProps) {
                 <div className="space-y-6">
                     <form onSubmit={handleSearch} className="flex gap-3">
                         <div className="relative flex-1">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 w-4 h-4" />
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/50 w-4 h-4" />
                             <input
                                 type="text"
                                 placeholder="Search by username..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-11 pr-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-purple-500/50 transition duration-200"
+                                className="w-full pl-11 pr-4 py-3 bg-secondary border border-border rounded-xl text-sm text-foreground placeholder-muted-foreground/60 focus:outline-none focus:border-primary/50 transition duration-200"
                             />
                         </div>
-                        <Button type="submit" variant="neon" className="px-5 py-3 h-auto rounded-xl text-xs font-bold">
+                        <Button type="submit" className="px-5 py-3 h-auto rounded-xl text-xs font-bold bg-primary hover:bg-primary-hover text-white border-none cursor-pointer">
                             Search
                         </Button>
                     </form>
 
                     {loading ? (
-                        <p className="text-white/45 text-center py-10 text-sm">Searching...</p>
+                        <p className="text-muted-foreground text-center py-10 text-sm">Searching...</p>
                     ) : (
                         <div className="space-y-2">
                             {searchResults.map((user) => {
@@ -388,30 +388,30 @@ export default function FriendsClient({ currentUser }: FriendsClientProps) {
                                 return (
                                     <div
                                         key={user.id}
-                                        className="bg-white/[0.02] border border-white/[0.04] p-4 rounded-xl flex items-center justify-between"
+                                        className="bg-card border border-border p-4 rounded-xl flex items-center justify-between"
                                     >
                                         <div className="flex items-center gap-3">
                                             <img
                                                 src={user.image || "/default-avatar.png"}
                                                 alt={user.username}
-                                                className="w-10 h-10 rounded-full object-cover border border-white/10"
+                                                className="w-10 h-10 rounded-full object-cover border border-border"
                                             />
-                                            <p className="font-bold text-sm text-white">{user.username}</p>
+                                            <p className="font-bold text-sm text-foreground">{user.username}</p>
                                         </div>
 
                                         <div>
                                             {status === "FRIEND" && (
-                                                <span className="text-[10px] text-purple-400 font-bold flex items-center gap-1 px-3 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20">
+                                                <span className="text-[10px] text-primary font-bold flex items-center gap-1 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
                                                     <UserCheck size={12} /> FRIENDS
                                                 </span>
                                             )}
                                             {status === "PENDING_RECEIVED" && (
-                                                <span className="text-[10px] text-yellow-400 font-bold flex items-center gap-1 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20">
+                                                <span className="text-[10px] text-amber-600 font-bold flex items-center gap-1 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20">
                                                     PENDING APPROVAL
                                                 </span>
                                             )}
                                             {status === "PENDING_SENT" && (
-                                                <span className="text-[10px] text-white/40 font-bold flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/5">
+                                                <span className="text-[10px] text-muted-foreground font-bold flex items-center gap-1 px-3 py-1.5 rounded-full bg-secondary border border-border/50">
                                                     <Clock size={12} /> SENT
                                                 </span>
                                             )}
@@ -419,7 +419,7 @@ export default function FriendsClient({ currentUser }: FriendsClientProps) {
                                                 <button
                                                     onClick={() => handleSendRequest(user.username, user.id)}
                                                     disabled={actionId === user.id}
-                                                    className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition active:scale-95"
+                                                    className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition active:scale-95 border-none cursor-pointer"
                                                 >
                                                     <UserPlus size={13} /> Add Friend
                                                 </button>
@@ -429,7 +429,7 @@ export default function FriendsClient({ currentUser }: FriendsClientProps) {
                                 )
                             })}
                             {searchQuery && searchResults.length === 0 && !loading && (
-                                <p className="text-white/40 text-center py-10 text-sm font-medium">No users found matching &quot;{searchQuery}&quot;</p>
+                                <p className="text-muted-foreground text-center py-10 text-sm font-semibold">No users found matching &quot;{searchQuery}&quot;</p>
                             )}
                         </div>
                     )}

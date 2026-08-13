@@ -226,16 +226,18 @@ export default function RoomClient({ room, songs, user }: any) {
     return (
         <div className="flex flex-col gap-5 flex-1 h-full w-full">
             {/* Header section */}
-            <div className="flex items-center justify-between pb-4 border-b border-white/5">
+            <div className="flex items-center justify-between pb-4 border-b border-border">
                 <div className="flex items-center gap-3">
-                    <h1 className="text-xl md:text-3xl font-extrabold text-white tracking-tight">{room.name}</h1>
+                    <h1 className="text-xl md:text-3xl font-extrabold text-foreground tracking-tight">{room.name}</h1>
                     <div className="flex items-center gap-1.5 px-3 py-1 bg-red-500/10 text-red-500 rounded-full text-xs font-semibold animate-pulse border border-red-500/20">
                         <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
                         LIVE
                     </div>
                     {/* Visibility badge */}
-                    <div className={`flex items-center gap-1 px-3 py-1 bg-white/5 rounded-full text-xs font-medium border border-white/10 ${
-                        room.visibility === 'invite' ? 'text-amber-400 border-amber-500/20' : 'text-emerald-400 border-emerald-500/20'
+                    <div className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold border ${
+                        room.visibility === 'invite' 
+                            ? 'text-amber-600 bg-amber-500/10 border-amber-500/20' 
+                            : 'text-emerald-600 bg-emerald-500/10 border-emerald-500/20'
                     }`}>
                         {room.visibility === 'invite' ? <Lock size={12} /> : <Globe size={12} />}
                         {room.visibility === 'invite' ? 'Invite Only' : 'Public'}
@@ -245,7 +247,7 @@ export default function RoomClient({ room, songs, user }: any) {
                 {/* Leave Room Button */}
                 <button
                     onClick={handleLeaveRoom}
-                    className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-red-500/20 hover:text-red-400 border border-white/10 hover:border-red-500/20 rounded-xl text-white/80 font-semibold text-sm transition-all"
+                    className="flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-red-500/10 hover:text-red-500 border border-border hover:border-red-500/20 rounded-xl text-muted-foreground font-semibold text-sm transition-all cursor-pointer"
                 >
                     <LogOut size={16} />
                     Leave Room
@@ -255,14 +257,14 @@ export default function RoomClient({ room, songs, user }: any) {
             {/* Content Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6 flex-1 items-stretch min-h-0">
                 {/* Left panel: Shared Queue & Player */}
-                <div className="flex flex-col bg-white/[0.02] border border-white/[0.05] rounded-2xl p-4 md:p-6 overflow-hidden min-h-0">
+                <div className="flex flex-col bg-card border border-border rounded-2xl p-4 md:p-6 overflow-hidden min-h-0 shadow-sm">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-sm md:text-base font-bold text-white/70 uppercase tracking-wider">Song Queue</h2>
-                        <span className="text-[10px] text-white/30 font-medium">{songs?.length ?? 0} tracks</span>
+                        <h2 className="text-sm md:text-base font-bold text-muted-foreground uppercase tracking-wider">Song Queue</h2>
+                        <span className="text-[10px] text-muted-foreground/60 font-semibold">{songs?.length ?? 0} tracks</span>
                     </div>
 
                     {/* Song list area — player is fixed at bottom, no need to embed here */}
-                    <div className="flex-1 overflow-y-auto flex flex-col gap-0.5 min-h-0 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                    <div className="flex-1 overflow-y-auto flex flex-col gap-0.5 min-h-0 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
                         {songs?.map((song: any) => (
                             <SharedQueue
                                 key={song.id}
@@ -275,7 +277,7 @@ export default function RoomClient({ room, songs, user }: any) {
                 </div>
 
                 {/* Right panel: Chat */}
-                <div className="flex flex-col bg-white/[0.02] border border-white/[0.05] rounded-2xl overflow-hidden">
+                <div className="flex flex-col bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
                     <Chat user={user} roomId={room.id} />
                 </div>
             </div>
@@ -316,7 +318,7 @@ export default function RoomClient({ room, songs, user }: any) {
             {/* Autoplay blocker notification */}
             {pendingSong && (
                 <div
-                    className="fixed bottom-28 left-1/2 -translate-x-1/2 bg-amber-400 text-black px-6 py-3 rounded-full font-bold shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:scale-105 transition-transform cursor-pointer z-[60] flex items-center gap-2 text-sm"
+                    className="fixed bottom-28 left-1/2 -translate-x-1/2 bg-amber-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:scale-105 transition-all cursor-pointer z-45 flex items-center gap-2 text-sm"
                     onClick={async () => {
                         if (!audioRef.current) return
                         audioRef.current.src = pendingSong.url

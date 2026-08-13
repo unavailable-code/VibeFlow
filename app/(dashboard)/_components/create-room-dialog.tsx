@@ -76,25 +76,25 @@ export default function CreateRoomDialog({ isOpen, onClose, friends = [] }: Crea
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             {/* Backdrop */}
             <div
-                className="absolute inset-0 bg-black/75 backdrop-blur-md transition-opacity duration-300"
+                className="absolute inset-0 bg-background/80 backdrop-blur-md transition-opacity duration-300"
                 onClick={onClose}
             />
 
             {/* Dialog Container */}
-            <div className="relative w-full max-w-md bg-[#0b0b14]/90 border border-white/[0.08] backdrop-blur-xl rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.85)] overflow-hidden transition-all transform animate-slide-up">
+            <div className="relative w-full max-w-md bg-card border border-border rounded-2xl shadow-[0_24px_80px_rgba(30,27,46,0.15)] overflow-hidden transition-all transform animate-slide-up">
                 {/* Top Accent Line */}
-                <div className="h-[3px] w-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500" />
+                <div className="h-[3px] w-full bg-gradient-to-r from-primary to-accent" />
 
                 <div className="p-6">
                     {/* Header */}
                     <div className="flex items-center justify-between mb-6">
                         <div>
-                            <h2 className="text-lg font-bold text-white tracking-tight">Create a Room</h2>
-                            <p className="text-white/40 text-xs mt-0.5 font-medium">Configure your live listening session</p>
+                            <h2 className="text-lg font-bold text-foreground tracking-tight">Create a Room</h2>
+                            <p className="text-muted-foreground text-xs mt-0.5 font-medium">Configure your live listening session</p>
                         </div>
                         <button
                             onClick={onClose}
-                            className="p-2 rounded-full text-white/40 hover:text-white hover:bg-white/5 transition-colors"
+                            className="p-2 rounded-full text-muted-foreground/60 hover:text-foreground hover:bg-secondary transition-colors cursor-pointer"
                         >
                             <X size={18} />
                         </button>
@@ -102,21 +102,21 @@ export default function CreateRoomDialog({ isOpen, onClose, friends = [] }: Crea
 
                     {/* Room Name Input */}
                     <div className="mb-5">
-                        <label className="block text-xs font-semibold text-white/60 uppercase tracking-wider mb-2">Room Name</label>
+                        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Room Name</label>
                         <input
                             type="text"
                             value={name}
                             onChange={e => setName(e.target.value)}
                             onKeyDown={e => e.key === "Enter" && handleCreate()}
                             placeholder="e.g. Chill Beats with Friends"
-                            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-purple-500/50 focus:bg-white/[0.06] transition-all duration-200"
+                            className="w-full bg-secondary border border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder-muted-foreground/60 outline-none focus:border-primary/50 focus:bg-secondary/80 transition-all duration-200"
                             maxLength={40}
                         />
                     </div>
 
                     {/* Visibility Options */}
                     <div className="mb-5">
-                        <label className="block text-xs font-semibold text-white/60 uppercase tracking-wider mb-2.5">Room Visibility</label>
+                        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Room Visibility</label>
                         <div className="grid grid-cols-2 gap-3">
                             {visibilityOptions.map(opt => {
                                 const Icon = opt.icon
@@ -126,15 +126,15 @@ export default function CreateRoomDialog({ isOpen, onClose, friends = [] }: Crea
                                         key={opt.value}
                                         onClick={() => setVisibility(opt.value)}
                                         className={cn(
-                                            "flex flex-col items-center gap-2 p-4 rounded-xl border text-center transition-all duration-200",
+                                            "flex flex-col items-center gap-2 p-4 rounded-xl border text-center transition-all duration-200 cursor-pointer",
                                             isSelected
-                                                ? "bg-purple-600/10 border-purple-500/40 text-purple-400 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]"
-                                                : "bg-white/[0.02] border-white/[0.06] text-white/50 hover:text-white hover:bg-white/[0.04]"
+                                                ? "bg-primary/10 border-primary text-primary shadow-sm"
+                                                : "bg-secondary border-border text-muted-foreground hover:text-foreground hover:bg-secondary/80"
                                         )}
                                     >
-                                        <Icon size={18} className={isSelected ? "text-purple-400" : "text-white/40"} />
+                                        <Icon size={18} className={isSelected ? "text-primary" : "text-muted-foreground/60"} />
                                         <span className="text-xs font-bold">{opt.label}</span>
-                                        <span className="text-[10px] leading-normal opacity-60 font-medium px-1">{opt.desc}</span>
+                                        <span className="text-[10px] leading-normal opacity-70 font-medium px-1">{opt.desc}</span>
                                     </button>
                                 )
                             })}
@@ -144,11 +144,11 @@ export default function CreateRoomDialog({ isOpen, onClose, friends = [] }: Crea
                     {/* Friend Inviter */}
                     {visibility === "invite" && friends.length > 0 && (
                         <div className="mb-5">
-                            <label className="block text-xs font-semibold text-white/60 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                            <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
                                 <UserPlus size={13} />
                                 Invite Friends
                             </label>
-                            <div className="max-h-32 overflow-y-auto flex flex-col gap-1 pr-1 scrollbar-thin scrollbar-thumb-white/5 scrollbar-track-transparent">
+                            <div className="max-h-32 overflow-y-auto flex flex-col gap-1 pr-1 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
                                 {friends.map(f => {
                                     const isInvited = selectedFriends.includes(f.id)
                                     return (
@@ -156,22 +156,22 @@ export default function CreateRoomDialog({ isOpen, onClose, friends = [] }: Crea
                                             key={f.id}
                                             onClick={() => toggleFriend(f.id)}
                                             className={cn(
-                                                "flex items-center gap-3 px-3 py-2 rounded-xl text-left transition-colors",
+                                                "flex items-center gap-3 px-3 py-2 rounded-xl text-left transition-colors border border-transparent cursor-pointer",
                                                 isInvited
-                                                    ? "bg-purple-500/10 border border-purple-500/20 text-white"
-                                                    : "hover:bg-white/[0.03] text-white/60 hover:text-white border border-transparent"
+                                                    ? "bg-primary/10 border-primary/20 text-primary"
+                                                    : "hover:bg-secondary/60 text-muted-foreground hover:text-foreground"
                                             )}
                                         >
                                             {f.image ? (
-                                                <img src={f.image} alt={f.username} className="w-6.5 h-6.5 rounded-full object-cover border border-white/10" />
+                                                <img src={f.image} alt={f.username} className="w-6.5 h-6.5 rounded-full object-cover border border-border" />
                                             ) : (
-                                                <div className="w-6.5 h-6.5 rounded-full bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center text-[10px] font-bold text-white shadow-sm">
+                                                <div className="w-6.5 h-6.5 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-[10px] font-bold text-white shadow-sm">
                                                     {f.username[0].toUpperCase()}
                                                 </div>
                                             )}
                                             <span className="text-xs font-semibold">{f.username}</span>
                                             {isInvited && (
-                                                <div className="ml-auto w-4.5 h-4.5 rounded-full bg-purple-500 flex items-center justify-center shadow-sm">
+                                                <div className="ml-auto w-4.5 h-4.5 rounded-full bg-primary flex items-center justify-center shadow-sm">
                                                     <svg width="8" height="6" viewBox="0 0 8 6" fill="none">
                                                         <path d="M1 3l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                                     </svg>
@@ -186,21 +186,21 @@ export default function CreateRoomDialog({ isOpen, onClose, friends = [] }: Crea
 
                     {/* Error display */}
                     {error && (
-                        <p className="text-red-400 text-xs font-semibold mb-4">{error}</p>
+                        <p className="text-red-500 text-xs font-semibold mb-4">{error}</p>
                     )}
 
                     {/* Actions */}
                     <div className="flex gap-3 mt-2">
                         <button
                             onClick={onClose}
-                            className="flex-1 py-3 rounded-xl border border-white/5 bg-white/[0.02] text-white/60 hover:text-white hover:bg-white/5 transition-colors text-sm font-semibold"
+                            className="flex-1 py-3 rounded-xl border border-border bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-colors text-sm font-semibold cursor-pointer"
                         >
                             Cancel
                         </button>
                         <button
                             onClick={handleCreate}
                             disabled={loading || !name.trim()}
-                            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-semibold text-sm transition-all hover:opacity-95 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="flex-1 py-3 rounded-xl bg-primary hover:bg-primary-hover text-white font-semibold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer border-none shadow-sm"
                         >
                             {loading ? (
                                 <>

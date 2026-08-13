@@ -20,19 +20,19 @@ export default function QueuePanel({ isVisible }: QueuePanelProps) {
     if (!isVisible) return null
 
     return (
-        <div className="fixed bottom-20 md:bottom-24 right-0 md:right-4 w-full md:w-[360px] h-[360px] md:h-[400px] bg-[#06060c]/95 md:rounded-t-2xl border-t border-x border-white/[0.06] z-40 flex flex-col overflow-hidden backdrop-blur-xl shadow-[0_-12px_40px_rgba(0,0,0,0.6)] transition-all duration-300">
+        <div className="fixed bottom-20 md:bottom-24 right-0 md:right-4 w-full md:w-[360px] h-[360px] md:h-[400px] bg-card md:rounded-t-2xl border-t border-x border-border z-45 flex flex-col overflow-hidden shadow-lg transition-all duration-300">
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] shrink-0">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-border shrink-0">
                 <div className="flex items-center gap-2">
-                    <ListMusic size={16} className="text-purple-400" />
-                    <span className="text-sm font-bold text-white tracking-tight">
+                    <ListMusic size={16} className="text-primary" />
+                    <span className="text-sm font-bold text-foreground tracking-tight">
                         Queue ({queue.length})
                     </span>
                 </div>
                 {queue.length > 0 && (
                     <button
                         onClick={clearQueue}
-                        className="flex items-center gap-1 text-[11px] font-semibold text-white/40 hover:text-red-400 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-white/5"
+                        className="flex items-center gap-1 text-[11px] font-semibold text-muted-foreground hover:text-red-500 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-secondary"
                     >
                         <Trash2 size={12} />
                         Clear
@@ -43,12 +43,12 @@ export default function QueuePanel({ isVisible }: QueuePanelProps) {
             {/* Song list */}
             <div className="flex-1 overflow-y-auto scrollbar-none">
                 {queue.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center h-full text-white/30 gap-3">
-                        <ListMusic size={28} className="text-white/20" />
-                        <p className="text-xs font-medium">Your queue is empty</p>
+                    <div className="flex flex-col items-center justify-center h-full text-muted-foreground/40 gap-3">
+                        <ListMusic size={28} className="text-muted-foreground/30" />
+                        <p className="text-xs font-semibold italic">Your queue is empty</p>
                     </div>
                 ) : (
-                    <div className="divide-y divide-white/[0.02]">
+                    <div className="divide-y divide-border/40">
                         {queue.map((song, index) => {
                             const isActive = index === currentIndex
                             return (
@@ -57,28 +57,28 @@ export default function QueuePanel({ isVisible }: QueuePanelProps) {
                                     onClick={() => setQueue(queue, index)}
                                     className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors border-l-2 ${
                                         isActive 
-                                            ? "bg-purple-600/10 border-purple-500" 
-                                            : "border-transparent hover:bg-white/[0.02]"
+                                            ? "bg-primary/10 border-primary" 
+                                            : "border-transparent hover:bg-secondary/60"
                                     }`}
                                 >
-                                    <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-white/5 shrink-0">
+                                    <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-border shrink-0">
                                         <img
                                             src={song.image}
                                             alt={song.title}
                                             className="w-full h-full object-cover"
                                         />
-                                        <div className={`absolute inset-0 bg-black/25 flex items-center justify-center transition-opacity ${isActive ? "opacity-100" : "opacity-0 hover:opacity-100"}`}>
-                                            <Play size={12} fill="currentColor" className={isActive ? "text-purple-400" : "text-white"} />
+                                        <div className={`absolute inset-0 bg-black/15 flex items-center justify-center transition-opacity ${isActive ? "opacity-100" : "opacity-0 hover:opacity-100"}`}>
+                                            <Play size={12} fill="currentColor" className={isActive ? "text-primary" : "text-white"} />
                                         </div>
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <p className={`text-xs md:text-sm font-semibold truncate ${
-                                            isActive ? "text-purple-400" : "text-white"
+                                            isActive ? "text-primary" : "text-foreground"
                                         }`}>
                                             {song.title}
                                         </p>
                                         {song.duration && (
-                                            <p className="text-[10px] text-white/40 mt-0.5 font-medium">
+                                            <p className="text-[10px] text-muted-foreground mt-0.5 font-medium">
                                                 {formatDuration(song.duration)}
                                             </p>
                                         )}
@@ -88,7 +88,7 @@ export default function QueuePanel({ isVisible }: QueuePanelProps) {
                                             e.stopPropagation()
                                             removeFromQueue(index)
                                         }}
-                                        className="p-2 rounded-full text-white/30 hover:text-red-400 hover:bg-white/5 transition-colors shrink-0"
+                                        className="p-2 rounded-full text-muted-foreground/45 hover:text-red-500 hover:bg-secondary transition-colors shrink-0"
                                     >
                                         <X size={14} />
                                     </button>

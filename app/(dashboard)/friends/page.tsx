@@ -15,10 +15,10 @@ export default async function FriendsPage() {
     return (
         <div className="pt-24 px-4 md:px-10 pb-32 md:pl-[280px] min-h-screen text-white">
             <div className="mb-10">
-                <h1 className="text-5xl font-extrabold mb-2">
+                <h1 className="text-5xl text-zinc-500 font-extrabold mb-2">
                     Social Hub
                 </h1>
-                <p className="text-white/60 text-lg">
+                <p className="text-black/25 text-lg mt-4">
                     Manage your friends and send live music room requests.
                 </p>
             </div>

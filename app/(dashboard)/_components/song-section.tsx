@@ -40,13 +40,13 @@ export default function SongList({ songs }: { songs: any[] }) {
     }
 
     if (!songs || songs.length === 0) {
-        return <div className="p-5 text-white/50">No songs found.</div>
+        return <div className="p-5 text-muted-foreground font-medium">No songs found.</div>
     }
 
     return (
         <div className="mt-8 pb-[100px]">
             {/* Header Row */}
-            <div className="hidden md:grid grid-cols-[40px_minmax(200px,1fr)_minmax(150px,1fr)_80px_100px] px-4 py-2 border-b border-white/10 mb-4 text-white/50 text-[0.8rem] uppercase tracking-wider font-semibold">
+            <div className="hidden md:grid grid-cols-[40px_minmax(200px,1fr)_minmax(150px,1fr)_80px_100px] px-4 py-2 border-b border-border mb-4 text-muted-foreground text-[0.8rem] uppercase tracking-wider font-semibold">
                 <div className="text-center">#</div>
                 <div>Title</div>
                 <div>Artist</div>

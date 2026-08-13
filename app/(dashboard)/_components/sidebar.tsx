@@ -17,10 +17,10 @@ const Sidebar = () => {
     return (
         <>
             {/* Desktop Sidebar */}
-            <aside className="hidden md:flex w-[240px] h-screen bg-gradient-to-b from-[#0d0d16] to-[#06060c] border-r border-white/[0.04] fixed top-0 left-0 z-40 flex-col pt-6">
+            <aside className="hidden md:flex w-[240px] h-screen bg-card border-r border-border fixed top-0 left-0 z-40 flex-col pt-6 shadow-sm">
                 {/* Logo */}
                 <div className="px-6 pb-8">
-                    <h1 className="text-2xl font-black italic bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 bg-clip-text text-transparent tracking-tight">
+                    <h1 className="text-2xl font-black text-[#1E1B2E]">
                         VibeFlow
                     </h1>
                 </div>
@@ -34,13 +34,13 @@ const Sidebar = () => {
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className={`flex items-center gap-3.5 px-4 py-3 rounded-xl transition-all duration-200 text-sm font-medium ${
+                                className={`flex items-center gap-3.5 px-4 py-3 rounded-xl transition-all duration-200 text-12 font-medium ${
                                     isActive 
-                                        ? "bg-purple-600/10 text-purple-400 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] border border-purple-500/20" 
-                                        : "text-white/50 hover:bg-white/[0.04] hover:text-white border border-transparent"
+                                        ? "bg-primary/10 text-primary border border-primary/10 shadow-[0_2px_8px_rgba(124,92,252,0.08)]" 
+                                        : "text-muted-foreground hover:bg-secondary hover:text-foreground border border-transparent"
                                 }`}
                             >
-                                <Icon size={18} className={isActive ? "text-purple-400" : "text-white/40"} />
+                                <Icon size={18} className={isActive ? "text-primary" : "text-muted-foreground"} />
                                 {item.label}
                             </Link>
                         )
@@ -49,7 +49,7 @@ const Sidebar = () => {
             </aside>
 
             {/* Mobile/Tablet Bottom Navigation Bar */}
-            <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[#06060c]/95 backdrop-blur-xl border-t border-white/[0.06] z-50 flex justify-around items-center px-2 pb-safe">
+            <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-card/95 backdrop-blur-xl border-t border-border z-50 flex justify-around items-center px-2 pb-safe shadow-lg">
                 {navItems.map((item) => {
                     const isActive = pathname === item.href
                     const Icon = item.icon
@@ -58,10 +58,10 @@ const Sidebar = () => {
                             key={item.href}
                             href={item.href}
                             className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-center transition-colors ${
-                                isActive ? "text-purple-400" : "text-white/40 hover:text-white/70"
+                                isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
                             }`}
                         >
-                            <Icon size={20} className={isActive ? "text-purple-400" : "text-white/40"} />
+                            <Icon size={20} className={isActive ? "text-primary" : "text-muted-foreground"} />
                             <span className="text-[10px] font-semibold mt-1 tracking-wide">{item.label}</span>
                         </Link>
                     )

@@ -93,21 +93,21 @@ const Search = () => {
     return (
         <div ref={wrapperRef} className="relative w-full max-w-md">
             {/* Input Wrapper */}
-            <div className="flex items-center bg-white/[0.04] border border-white/[0.06] rounded-xl px-4 h-11 gap-3 focus-within:border-purple-500/50 focus-within:bg-white/[0.06] transition-all duration-200 shadow-inner">
-                <SearchIcon size={16} className="text-white/40 shrink-0" />
+            <div className="flex items-center bg-card border border-border rounded-xl px-4 h-11 gap-3 focus-within:border-primary/50 focus-within:bg-card transition-all duration-200 shadow-sm">
+                <SearchIcon size={16} className="text-muted-foreground shrink-0" />
                 <input
                     type="text"
                     value={query}
                     onChange={(e) => handleSearch(e.target.value)}
                     onFocus={() => { if (results.length > 0) setIsOpen(true) }}
                     placeholder="Search tracks, artists, albums..."
-                    className="bg-transparent border-none outline-none text-white text-sm w-full placeholder-white/30"
+                    className="bg-transparent border-none outline-none text-foreground text-sm w-full placeholder-muted-foreground/60"
                 />
-                {loading && <Loader2 className="animate-spin text-purple-400 shrink-0" size={14} />}
+                {loading && <Loader2 className="animate-spin text-primary shrink-0" size={14} />}
                 {!loading && query && (
                     <button
                         onClick={() => { setQuery(""); setResults([]); setIsOpen(false) }}
-                        className="text-white/40 hover:text-white transition-colors"
+                        className="text-muted-foreground hover:text-foreground transition-colors"
                     >
                         <X size={14} />
                     </button>
@@ -116,9 +116,9 @@ const Search = () => {
 
             {/* Redesigned Search Results dropdown */}
             {isOpen && (
-                <div className="absolute top-full mt-2.5 left-0 right-0 bg-[#0a0a12]/95 border border-white/[0.08] backdrop-blur-xl rounded-xl shadow-[0_16px_48px_rgba(0,0,0,0.8)] max-h-[360px] overflow-y-auto z-[60] divide-y divide-white/[0.04] animate-slide-up">
+                <div className="absolute top-full mt-2.5 left-0 right-0 bg-card border border-border backdrop-blur-xl rounded-xl shadow-[0_12px_32px_rgba(30,27,46,0.12)] max-h-[360px] overflow-y-auto z-[60] divide-y divide-border animate-slide-up">
                     {results.length === 0 ? (
-                        <div className="px-4 py-8 text-center text-white/40 text-sm">
+                        <div className="px-4 py-8 text-center text-muted-foreground text-sm">
                             No results found for &quot;{query}&quot;
                         </div>
                     ) : (
@@ -126,31 +126,31 @@ const Search = () => {
                             {results.map((song) => (
                                 <div
                                     key={song.id}
-                                    className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/[0.04] cursor-pointer transition-colors group"
+                                    className="flex items-center gap-3 px-4 py-2.5 hover:bg-secondary cursor-pointer transition-colors group"
                                     onClick={() => handlePlay(song)}
                                 >
-                                    <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-white/5 shrink-0 shadow-md">
+                                    <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-border shrink-0 shadow-sm">
                                         <img
                                             src={song.image}
                                             alt={song.title}
                                             className="w-full h-full object-cover"
                                         />
-                                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                             <Play size={12} fill="currentColor" className="text-white" />
                                         </div>
                                     </div>
                                     
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-sm font-semibold text-white truncate group-hover:text-purple-400 transition-colors">
+                                        <p className="text-sm font-semibold text-foreground truncate group-hover:text-primary transition-colors">
                                             {song.title}
                                         </p>
-                                        <p className="text-xs text-white/40 truncate mt-0.5 font-medium">
+                                        <p className="text-xs text-muted-foreground truncate mt-0.5 font-medium">
                                             {song.artists?.map(a => a.artist?.name).join(", ") || "Unknown"}
                                             {song.album?.name ? ` • ${song.album.name}` : ""}
                                         </p>
                                     </div>
                                     
-                                    <span className="text-xs text-white/30 group-hover:hidden shrink-0 font-medium tracking-wide">
+                                    <span className="text-xs text-muted-foreground group-hover:hidden shrink-0 font-medium tracking-wide">
                                         {formatDuration(song.duration)}
                                     </span>
                                     
@@ -158,14 +158,14 @@ const Search = () => {
                                     <div className="hidden group-hover:flex items-center gap-1 shrink-0 ml-2" onClick={(e) => e.stopPropagation()}>
                                         <button
                                             onClick={() => handlePlay(song)}
-                                            className="p-1.5 rounded-full hover:bg-purple-500/20 text-purple-400 transition-colors"
+                                            className="p-1.5 rounded-full hover:bg-primary/10 text-primary transition-colors"
                                             title="Play now"
                                         >
                                             <Play size={12} fill="currentColor" />
                                         </button>
                                         <button
                                             onClick={() => handleAddToQueue(song)}
-                                            className="p-1.5 rounded-full hover:bg-cyan-500/20 text-cyan-400 transition-colors"
+                                            className="p-1.5 rounded-full hover:bg-primary/10 text-primary transition-colors"
                                             title="Add to queue"
                                         >
                                             <Plus size={12} />

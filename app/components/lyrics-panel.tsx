@@ -106,26 +106,26 @@ export default function LyricsPanel({
     const parseMarkdown = (text: string) => {
         return text.split("\n").map((line, idx) => {
             if (line.startsWith("### ")) {
-                return <h3 key={idx} className="text-sm font-bold text-purple-400 mt-4 mb-2 tracking-wide uppercase">{line.replace("### ", "")}</h3>
+                return <h3 key={idx} className="text-xs font-bold text-primary mt-4 mb-2 tracking-wide uppercase">{line.replace("### ", "")}</h3>
             }
             if (line.startsWith("## ")) {
-                return <h2 key={idx} className="text-base font-bold text-purple-400 mt-5 mb-2 border-b border-white/5 pb-1 tracking-tight">{line.replace("## ", "")}</h2>
+                return <h2 key={idx} className="text-sm font-bold text-primary mt-5 mb-2 border-b border-border pb-1 tracking-tight">{line.replace("## ", "")}</h2>
             }
             if (line.startsWith("# ")) {
-                return <h1 key={idx} className="text-lg font-black text-white mt-6 mb-3 tracking-tight">{line.replace("# ", "")}</h1>
+                return <h1 key={idx} className="text-base font-black text-foreground mt-6 mb-3 tracking-tight">{line.replace("# ", "")}</h1>
             }
             if (line.startsWith("- ")) {
-                return <li key={idx} className="ml-4 list-disc text-white/70 my-1.5 text-xs md:text-sm leading-relaxed">{line.replace("- ", "")}</li>
+                return <li key={idx} className="ml-4 list-disc text-muted-foreground my-1.5 text-xs md:text-sm leading-relaxed">{line.replace("- ", "")}</li>
             }
             if (line.trim() === "") {
                 return <div key={idx} className="h-2" />
             }
-            return <p key={idx} className="text-white/80 leading-relaxed my-2 text-xs md:text-sm">{line}</p>
+            return <p key={idx} className="text-foreground/80 leading-relaxed my-2 text-xs md:text-sm">{line}</p>
         })
     }
 
     return (
-        <div className="fixed bottom-20 md:bottom-24 left-0 md:left-4 right-0 md:right-4 h-[360px] md:h-[400px] bg-[#06060c]/95 md:rounded-t-2xl border-t border-x border-white/[0.06] z-40 flex flex-col md:flex-row overflow-hidden backdrop-blur-xl shadow-[0_-12px_40px_rgba(0,0,0,0.6)] transition-all duration-300">
+        <div className="fixed bottom-20 md:bottom-24 left-0 md:left-4 right-0 md:right-4 h-[360px] md:h-[400px] bg-card md:rounded-t-2xl border-t border-x border-border z-45 flex flex-col md:flex-row overflow-hidden shadow-lg transition-all duration-300">
             
             {/* Lyrics Container Column */}
             <div className="flex-1 flex flex-col relative h-full min-w-0">
@@ -133,7 +133,7 @@ export default function LyricsPanel({
                 <div className="absolute top-4 right-4 z-10">
                     <button
                         onClick={handleExplainClick}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/20 rounded-full text-xs font-bold transition-all duration-200 shadow-sm active:scale-95"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 rounded-full text-xs font-bold transition-all duration-200 shadow-sm active:scale-95"
                     >
                         <Sparkles size={13} className="animate-pulse" />
                         AI Explain
@@ -157,10 +157,10 @@ export default function LyricsPanel({
                                         ref={isActive ? activeRef : null}
                                         className={`text-center max-w-xl transition-all duration-350 ease-out origin-center leading-relaxed ${
                                             isActive
-                                                ? "text-white text-lg md:text-2xl font-black scale-102 tracking-tight drop-shadow-[0_0_15px_rgba(168,85,247,0.35)]"
+                                                ? "text-foreground text-lg md:text-2xl font-black scale-102 tracking-tight drop-shadow-[0_2px_8px_rgba(124,92,252,0.15)]"
                                                 : isPast
-                                                ? "text-white/20 text-sm md:text-base font-medium scale-98"
-                                                : "text-white/45 text-sm md:text-base font-medium scale-98 hover:text-white/70"
+                                                ? "text-muted-foreground/30 text-sm md:text-base font-medium scale-98"
+                                                : "text-muted-foreground/60 text-sm md:text-base font-medium scale-98 hover:text-foreground"
                                         }`}
                                     >
                                         {line.text}
@@ -170,12 +170,12 @@ export default function LyricsPanel({
                         </div>
                     ) : plainLyrics ? (
                         <div className="px-6 max-w-xl mx-auto py-4">
-                            <p className="text-white/60 leading-loose text-center text-sm md:text-base whitespace-pre-line font-medium">
+                            <p className="text-muted-foreground leading-loose text-center text-sm md:text-base whitespace-pre-line font-medium">
                                 {plainLyrics}
                             </p>
                         </div>
                     ) : (
-                        <div className="flex items-center justify-center h-full text-white/30 font-medium">
+                        <div className="flex items-center justify-center h-full text-muted-foreground/40 font-semibold italic">
                             No lyrics available
                         </div>
                     )}
@@ -184,37 +184,37 @@ export default function LyricsPanel({
 
             {/* AI Explanation Column / Drawer */}
             {showExplanation && (
-                <div className="w-full md:w-[380px] xl:w-[440px] h-full border-t md:border-t-0 md:border-l border-white/[0.06] bg-black/40 backdrop-blur-xl z-20 flex flex-col p-5 overflow-hidden transition-all duration-300">
+                <div className="w-full md:w-[380px] xl:w-[440px] h-full border-t md:border-t-0 md:border-l border-border bg-secondary/30 z-20 flex flex-col p-5 overflow-hidden transition-all duration-300">
                     {/* Header */}
-                    <div className="flex items-center justify-between pb-3 border-b border-white/[0.06] mb-4 shrink-0">
-                        <div className="flex items-center gap-2 text-purple-400">
+                    <div className="flex items-center justify-between pb-3 border-b border-border mb-4 shrink-0">
+                        <div className="flex items-center gap-2 text-primary">
                             <Sparkles size={15} />
                             <span className="font-bold text-xs tracking-wider uppercase">Gemini AI Explains</span>
                         </div>
                         <button
                             onClick={() => setShowExplanation(false)}
-                            className="p-1.5 rounded-full text-white/40 hover:text-white hover:bg-white/5 transition-all"
+                            className="p-1.5 rounded-full text-muted-foreground/60 hover:text-foreground hover:bg-secondary transition-all"
                         >
                             <X size={15} />
                         </button>
                     </div>
 
                     {/* Explanations Content */}
-                    <div className="flex-1 overflow-y-auto pr-1 pb-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                    <div className="flex-1 overflow-y-auto pr-1 pb-4 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
                         {loading ? (
-                            <div className="flex flex-col items-center justify-center h-full gap-3 text-white/40">
-                                <Loader2 className="animate-spin text-purple-500" size={24} />
+                            <div className="flex flex-col items-center justify-center h-full gap-3 text-muted-foreground">
+                                <Loader2 className="animate-spin text-primary" size={24} />
                                 <span className="text-xs font-semibold">Gemini is analyzing the track...</span>
                             </div>
                         ) : error ? (
                             <div className="flex flex-col items-center justify-center h-full gap-3 text-center px-4">
-                                <AlertCircle className="text-red-400" size={24} />
-                                <p className="text-red-400 text-xs font-semibold max-w-xs">{error}</p>
+                                <AlertCircle className="text-red-500" size={24} />
+                                <p className="text-red-500 text-xs font-semibold max-w-xs">{error}</p>
                                 {error.includes("GEMINI_API_KEY") && (
-                                    <p className="text-[10px] text-white/30 max-w-xs mt-1 leading-normal">
+                                    <p className="text-[10px] text-muted-foreground max-w-xs mt-1 leading-normal">
                                         Open the <code>.env</code> file in the project root and append:
                                         <br />
-                                        <code className="block bg-white/5 p-2 rounded mt-2 select-all text-purple-300 font-mono">GEMINI_API_KEY=your_key_here</code>
+                                        <code className="block bg-secondary p-2 rounded mt-2 select-all text-primary font-mono border border-border">GEMINI_API_KEY=your_key_here</code>
                                     </p>
                                 )}
                             </div>

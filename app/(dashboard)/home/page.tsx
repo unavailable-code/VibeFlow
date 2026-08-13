@@ -25,14 +25,14 @@ const Page = async () => {
         return (
             <div className="pt-24 px-4 md:px-10 pb-32 md:pl-[280px] min-h-screen">
                 <div className="flex items-baseline gap-3 mb-10">
-                    <h1 className="text-5xl md:text-6xl font-extrabold text-white">Welcome Back,</h1>
-                    <span className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent">
+                    <h1 className="text-5xl md:text-6xl font-extrabold text-[#1E1B2E]">Welcome Back,</h1>
+                    <span className="text-5xl md:text-6xl font-extrabold text-[#7C5CFC] ">
                         {self.username}
                     </span>
                 </div>
 
                 <section className="mb-15">
-                    <h2 className="text-3xl font-bold text-white mb-6">
+                    <h2 className="text-3xl font-bold text-zinc-400 mb-6">
                         Discover Artists
                     </h2>
                     <div className="max-w-[1200px]">
@@ -41,7 +41,7 @@ const Page = async () => {
                 </section>
 
                 <section className="mb-15">
-                    <h2 className="text-3xl font-bold text-white mb-6">
+                    <h2 className="text-3xl font-bold text-zinc-500 mb-6">
                         Trending Albums
                     </h2>
                     <div className="flex gap-6 overflow-x-auto pb-4">
@@ -52,7 +52,7 @@ const Page = async () => {
                 </section>
 
                 <section>
-                    <h2 className="text-3xl font-bold text-white mb-2">
+                    <h2 className="text-3xl font-bold text-zinc-500 mb-2">
                         Recommended Tracks
                     </h2>
                     <SongList songs={songs} />

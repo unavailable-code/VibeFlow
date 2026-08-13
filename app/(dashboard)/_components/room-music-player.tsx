@@ -61,11 +61,11 @@ const RoomMusicPlayer = ({
                 songId={currentSong?.id}
             />
 
-            <div className="fixed bottom-0 md:bottom-4 left-0 md:left-4 right-0 md:right-4 h-20 md:h-22 bg-gradient-to-r from-[#0d0d16]/95 via-[#06060c]/98 to-[#0d0d16]/95 border-t md:border border-white/[0.06] md:rounded-2xl z-50 flex items-center justify-between px-4 md:px-6 gap-4 backdrop-blur-xl shadow-[0_-8px_30px_rgba(0,0,0,0.5)]">
+            <div className="fixed bottom-0 md:bottom-4 left-0 md:left-4 right-0 md:right-4 h-20 md:h-22 bg-card border-t md:border border-border md:rounded-2xl z-45 flex items-center justify-between px-4 md:px-6 gap-4 backdrop-blur-xl shadow-lg">
                 {/* Tiny top progress bar for mobile */}
-                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-white/[0.08] md:hidden">
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-progress-bg md:hidden">
                     <div 
-                        className="h-full bg-gradient-to-r from-purple-500 to-cyan-400 transition-all duration-100 ease-linear"
+                        className="h-full bg-progress-fill transition-all duration-100 ease-linear"
                         style={{ width: `${progress}%` }}
                     />
                 </div>
@@ -78,32 +78,32 @@ const RoomMusicPlayer = ({
                                 <img
                                     src={currentSong.image}
                                     alt={currentSong.title}
-                                    className="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover shadow-[0_4px_16px_rgba(0,0,0,0.4)] border border-white/5"
+                                    className="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover shadow-sm border border-border"
                                 />
                                 {isPlaying && (
-                                    <div className="absolute inset-0 rounded-lg bg-purple-500/10 animate-pulse" />
+                                    <div className="absolute inset-0 rounded-lg bg-primary/10 animate-pulse" />
                                 )}
                             </div>
                             <div className="min-w-0 pr-2">
-                                <p className="text-xs md:text-sm font-bold text-white truncate tracking-wide">
+                                <p className="text-xs md:text-sm font-bold text-foreground truncate tracking-wide">
                                     {currentSong.title}
                                 </p>
                                 <div className="flex items-center gap-1.5 mt-0.5">
                                     {isPlaying && (
                                         <span className="flex items-center gap-0.5 h-2 w-3">
-                                            <span className="w-[1.5px] h-full bg-purple-400 animate-[pulse_0.8s_infinite_alternate]" />
-                                            <span className="w-[1.5px] h-[70%] bg-purple-400 animate-[pulse_0.5s_infinite_alternate]" />
-                                            <span className="w-[1.5px] h-[40%] bg-purple-400 animate-[pulse_0.7s_infinite_alternate]" />
+                                            <span className="w-[1.5px] h-full bg-primary animate-[pulse_0.8s_infinite_alternate]" />
+                                            <span className="w-[1.5px] h-[70%] bg-primary animate-[pulse_0.5s_infinite_alternate]" />
+                                            <span className="w-[1.5px] h-[40%] bg-primary animate-[pulse_0.7s_infinite_alternate]" />
                                         </span>
                                     )}
-                                    <p className="text-[10px] md:text-xs text-white/40 font-medium">
+                                    <p className="text-[10px] md:text-xs text-muted-foreground font-medium">
                                         Live Stream
                                     </p>
                                 </div>
                             </div>
                         </>
                     ) : (
-                        <p className="text-white/40 text-xs md:text-sm font-semibold italic">No track selected</p>
+                        <p className="text-muted-foreground/50 text-xs md:text-sm font-semibold italic">No track selected</p>
                     )}
                 </div>
 
@@ -115,10 +115,10 @@ const RoomMusicPlayer = ({
                             onClick={isPlaying ? onPause : onPlay}
                             disabled={!isHost}
                             className={cn(
-                                "w-10 h-10 md:w-12 md:h-12 rounded-full border-none flex items-center justify-center shrink-0 transition-all shadow-[0_4px_15px_rgba(168,85,247,0.3)]",
+                                "w-10 h-10 md:w-12 md:h-12 rounded-full border-none flex items-center justify-center shrink-0 transition-all shadow-sm",
                                 isHost
-                                    ? "bg-gradient-to-br from-purple-500 to-fuchsia-600 hover:from-purple-600 hover:to-fuchsia-700 text-white cursor-pointer hover:scale-105 active:scale-95"
-                                    : "bg-white/5 border border-white/5 text-white/20 cursor-not-allowed"
+                                    ? "bg-primary hover:bg-primary-hover text-white cursor-pointer hover:scale-105 active:scale-95 shadow-primary/10"
+                                    : "bg-secondary border border-border text-muted-foreground/30 cursor-not-allowed"
                             )}
                             title={isHost ? (isPlaying ? "Pause Session" : "Play Session") : "Only Host can control playback"}
                         >
@@ -128,17 +128,17 @@ const RoomMusicPlayer = ({
 
                     {/* Timeline Slider (Desktop Only) */}
                     <div className="hidden md:flex items-center gap-3 w-full">
-                        <span className="text-[10px] text-white/40 font-semibold w-10 text-right tabular-nums">
+                        <span className="text-[10px] text-muted-foreground font-semibold w-10 text-right tabular-nums">
                             {formatTime(currentTime)}
                         </span>
                         <div className="flex-1 relative h-1">
-                            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1 bg-white/[0.08] rounded-full" />
+                            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1 bg-progress-bg rounded-full" />
                             <div 
-                                className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-gradient-to-r from-purple-500 to-cyan-400 rounded-full"
+                                className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-progress-fill rounded-full"
                                 style={{ width: `${progress}%` }}
                             />
                         </div>
-                        <span className="text-[10px] text-white/40 font-semibold w-10 text-left tabular-nums">
+                        <span className="text-[10px] text-muted-foreground font-semibold w-10 text-left tabular-nums">
                             {formatTime(duration)}
                         </span>
                     </div>
@@ -151,10 +151,10 @@ const RoomMusicPlayer = ({
                         onClick={() => setShowLyrics(!showLyrics)}
                         disabled={!currentSong}
                         className={cn(
-                            "p-2 rounded-xl transition-all duration-200 border",
+                            "p-2 rounded-xl transition-all duration-200 border cursor-pointer",
                             showLyrics 
-                                ? "bg-purple-500/10 text-purple-400 border-purple-500/20 shadow-[0_0_12px_rgba(168,85,247,0.1)]" 
-                                : "text-white/40 hover:text-white hover:bg-white/5 border-transparent disabled:opacity-30 disabled:cursor-not-allowed"
+                                ? "bg-primary/10 text-primary border-primary/20 shadow-sm" 
+                                : "text-muted-foreground hover:text-foreground hover:bg-secondary border-transparent disabled:opacity-30 disabled:cursor-not-allowed"
                         )}
                         title="Lyrics"
                     >
@@ -165,7 +165,7 @@ const RoomMusicPlayer = ({
                     <div className="hidden md:flex items-center gap-2">
                         <button
                             onClick={() => setIsMuted(!isMuted)}
-                            className="text-white/40 hover:text-white transition-colors p-1.5"
+                            className="text-muted-foreground hover:text-foreground transition-colors p-1.5 cursor-pointer bg-transparent border-none"
                         >
                             {isMuted || volume === 0 ? <VolumeX size={16} /> : <Volume2 size={16} />}
                         </button>
@@ -180,7 +180,7 @@ const RoomMusicPlayer = ({
                                 setVolume(v)
                                 setIsMuted(v === 0)
                             }}
-                            className="w-16 h-1 accent-purple-500 bg-white/10 rounded-lg cursor-pointer"
+                            className="w-16 h-1 accent-primary bg-progress-bg rounded-lg cursor-pointer"
                         />
                     </div>
                 </div>

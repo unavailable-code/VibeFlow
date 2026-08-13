@@ -98,10 +98,10 @@ const MusicPlayer = () => {
             />
             <QueuePanel isVisible={showQueue} />
 
-            <div className="fixed bottom-0 md:bottom-4 left-0 md:left-4 right-0 md:right-4 h-20 md:h-22 bg-gradient-to-r from-[#0d0d16]/95 via-[#06060c]/98 to-[#0d0d16]/95 border-t md:border border-white/[0.06] md:rounded-2xl z-50 flex items-center justify-between px-4 md:px-6 gap-4 backdrop-blur-xl shadow-[0_-8px_30px_rgba(0,0,0,0.5)]">
+            <div className="fixed bottom-0 md:bottom-4 left-0 md:left-4 right-0 md:right-4 h-20 md:h-22 bg-card border-t md:border border-border md:rounded-2xl z-50 flex items-center justify-between px-4 md:px-6 gap-4 backdrop-blur-xl shadow-lg">
                 {/* Tiny top progress bar for mobile */}
                 <div 
-                    className="absolute top-0 left-0 right-0 h-[2.5px] bg-white/[0.08] cursor-pointer md:hidden"
+                    className="absolute top-0 left-0 right-0 h-[2.5px] bg-progress-bg cursor-pointer md:hidden"
                     onClick={(e) => {
                         const rect = e.currentTarget.getBoundingClientRect()
                         const x = e.clientX - rect.left
@@ -112,7 +112,7 @@ const MusicPlayer = () => {
                     }}
                 >
                     <div 
-                        className="h-full bg-gradient-to-r from-purple-500 to-cyan-400 transition-all duration-100 ease-linear"
+                        className="h-full bg-progress-fill transition-all duration-100 ease-linear"
                         style={{ width: `${progress}%` }}
                     />
                 </div>
@@ -123,25 +123,25 @@ const MusicPlayer = () => {
                         <img
                             src={currentSong.image}
                             alt={currentSong.title}
-                            className="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover shadow-[0_4px_16px_rgba(0,0,0,0.4)] border border-white/5"
+                            className="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover shadow-sm border border-border"
                         />
                         {isPlaying && (
-                            <div className="absolute inset-0 rounded-lg bg-purple-500/10 animate-pulse" />
+                            <div className="absolute inset-0 rounded-lg bg-primary/10 animate-pulse" />
                         )}
                     </div>
                     <div className="min-w-0 pr-2">
-                        <p className="text-xs md:text-sm font-bold text-white truncate tracking-wide">
+                        <p className="text-xs md:text-sm font-bold text-foreground truncate tracking-wide">
                             {currentSong.title}
                         </p>
                         <div className="flex items-center gap-1.5 mt-0.5">
                             {isPlaying && (
                                 <span className="flex items-center gap-0.5 h-2 w-3">
-                                    <span className="w-[1.5px] h-full bg-purple-400 animate-[pulse_0.8s_infinite_alternate]" />
-                                    <span className="w-[1.5px] h-[70%] bg-purple-400 animate-[pulse_0.5s_infinite_alternate]" />
-                                    <span className="w-[1.5px] h-[40%] bg-purple-400 animate-[pulse_0.7s_infinite_alternate]" />
+                                    <span className="w-[1.5px] h-full bg-primary animate-[pulse_0.8s_infinite_alternate]" />
+                                    <span className="w-[1.5px] h-[70%] bg-primary animate-[pulse_0.5s_infinite_alternate]" />
+                                    <span className="w-[1.5px] h-[40%] bg-primary animate-[pulse_0.7s_infinite_alternate]" />
                                 </span>
                             )}
-                            <p className="text-[10px] md:text-xs text-white/40 font-medium">
+                            <p className="text-[10px] md:text-xs text-muted-foreground font-medium">
                                 Now Playing
                             </p>
                         </div>
@@ -154,7 +154,7 @@ const MusicPlayer = () => {
                     <div className="flex items-center gap-6">
                         <button
                             onClick={prev}
-                            className="text-white/40 hover:text-white transition-colors p-1.5 rounded-full hover:bg-white/5 active:scale-90"
+                            className="text-muted-foreground hover:text-foreground transition-colors p-1.5 rounded-full hover:bg-secondary active:scale-90"
                             title="Previous"
                         >
                             <SkipBack size={18} />
@@ -162,14 +162,14 @@ const MusicPlayer = () => {
 
                         <button
                             onClick={togglePlay}
-                            className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-600 hover:from-purple-600 hover:to-fuchsia-700 text-white flex items-center justify-center shadow-[0_4px_15px_rgba(168,85,247,0.35)] transition-all hover:scale-105 active:scale-95 shrink-0"
+                            className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary hover:bg-primary-hover text-white flex items-center justify-center shadow-md transition-all hover:scale-105 active:scale-95 shrink-0 border-none"
                         >
                             {isPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" className="ml-0.5" />}
                         </button>
 
                         <button
                             onClick={next}
-                            className="text-white/40 hover:text-white transition-colors p-1.5 rounded-full hover:bg-white/5 active:scale-90"
+                            className="text-muted-foreground hover:text-foreground transition-colors p-1.5 rounded-full hover:bg-secondary active:scale-90"
                             title="Next"
                         >
                             <SkipForward size={18} />
@@ -178,7 +178,7 @@ const MusicPlayer = () => {
 
                     {/* Timeline Slider (Desktop Only) */}
                     <div className="hidden md:flex items-center gap-3 w-full">
-                        <span className="text-[10px] text-white/40 font-semibold w-10 text-right tabular-nums">
+                        <span className="text-[10px] text-muted-foreground font-semibold w-10 text-right tabular-nums">
                             {formatTime(currentTime)}
                         </span>
                         <div
@@ -192,9 +192,9 @@ const MusicPlayer = () => {
                                 setCurrentTime(newTime)
                             }}
                         >
-                            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1 bg-white/[0.08] rounded-full" />
+                            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1 bg-progress-bg rounded-full" />
                             <div 
-                                className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-gradient-to-r from-purple-500 to-cyan-400 rounded-full group-hover:from-purple-400 group-hover:to-cyan-300"
+                                className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-progress-fill rounded-full"
                                 style={{ width: `${progress}%` }}
                             />
                             <input
@@ -213,7 +213,7 @@ const MusicPlayer = () => {
                                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                             />
                         </div>
-                        <span className="text-[10px] text-white/40 font-semibold w-10 text-left tabular-nums">
+                        <span className="text-[10px] text-muted-foreground font-semibold w-10 text-left tabular-nums">
                             {formatTime(duration)}
                         </span>
                     </div>
@@ -226,8 +226,8 @@ const MusicPlayer = () => {
                         onClick={toggleLyrics}
                         className={`p-2 rounded-xl transition-all duration-200 ${
                             showLyrics 
-                                ? "bg-purple-500/10 text-purple-400 border border-purple-500/20 shadow-[0_0_12px_rgba(168,85,247,0.1)]" 
-                                : "text-white/40 hover:text-white hover:bg-white/5 border border-transparent"
+                                ? "bg-primary/10 text-primary border border-primary/20 shadow-sm" 
+                                : "text-muted-foreground hover:text-foreground hover:bg-secondary border border-transparent"
                         }`}
                         title="Lyrics"
                     >
@@ -239,8 +239,8 @@ const MusicPlayer = () => {
                         onClick={toggleQueue}
                         className={`p-2 rounded-xl transition-all duration-200 ${
                             showQueue 
-                                ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_12px_rgba(6,182,212,0.1)]" 
-                                : "text-white/40 hover:text-white hover:bg-white/5 border border-transparent"
+                                ? "bg-primary/10 text-primary border border-primary/20 shadow-sm" 
+                                : "text-muted-foreground hover:text-foreground hover:bg-secondary border border-transparent"
                         }`}
                         title="Queue"
                     >
@@ -251,7 +251,7 @@ const MusicPlayer = () => {
                     <div className="hidden md:flex items-center gap-2">
                         <button
                             onClick={() => setIsMuted(!isMuted)}
-                            className="text-white/40 hover:text-white transition-colors p-1.5"
+                            className="text-muted-foreground hover:text-foreground transition-colors p-1.5"
                         >
                             {isMuted || volume === 0 ? <VolumeX size={16} /> : <Volume2 size={16} />}
                         </button>
@@ -266,7 +266,7 @@ const MusicPlayer = () => {
                                 setVolume(v)
                                 setIsMuted(v === 0)
                             }}
-                            className="w-16 h-1 accent-purple-500 bg-white/10 rounded-lg cursor-pointer"
+                            className="w-16 h-1 accent-primary bg-progress-bg rounded-lg cursor-pointer"
                         />
                     </div>
                 </div>
