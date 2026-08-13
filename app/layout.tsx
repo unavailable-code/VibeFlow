@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Varela_Round } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
@@ -11,6 +11,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const varelaRound = Varela_Round({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-varela-round",
 });
 
 export const metadata: Metadata = {
@@ -26,8 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      // className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      className="dark"
+      className={`${varelaRound.variable} dark`}
       >
       <ClerkProvider>
       <body className="min-h-full flex flex-col">{children}</body>
